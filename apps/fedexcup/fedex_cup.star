@@ -1,3 +1,7 @@
+# Modified in this community-maintained version; see Git history for contributors.
+# Original author and license notices are retained below.
+# See README.md for maintenance and compatibility notes.
+
 """Current FedExCup standings from the PGA TOUR media page."""
 
 load("html.star", "html")

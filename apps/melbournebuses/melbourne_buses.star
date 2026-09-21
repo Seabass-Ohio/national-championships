@@ -1,3 +1,7 @@
+# Modified in this community-maintained version; see Git history for contributors.
+# Original author and license notices are retained below.
+# See README.md for maintenance and compatibility notes.
+
 """Show real-time Melbourne bus departures from the PTV Timetable API."""
 
 load("encoding/json.star", "json")

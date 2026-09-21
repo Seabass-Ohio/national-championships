@@ -1,3 +1,7 @@
+# Modified in this community-maintained version; see Git history for contributors.
+# Original author and license notices are retained below.
+# See readme.md for maintenance and compatibility notes.
+
 """
 Applet: On The Air
 Summary: Notify of "On [The] Air" status

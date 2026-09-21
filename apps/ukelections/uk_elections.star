@@ -1,3 +1,7 @@
+# Modified in this community-maintained version; see Git history for contributors.
+# Original author and license notices are retained below.
+# See README.md for maintenance and compatibility notes.
+
 """Show upcoming UK elections for a postcode or address slug."""
 
 load("encoding/json.star", "json")

@@ -1,3 +1,7 @@
+# Modified in this community-maintained version; see Git history for contributors.
+# Original author and license notices are retained below.
+# See README.md for maintenance and compatibility notes.
+
 load("http.star", "http")
 load("images/corp_icon.png", CORP_ICON_ASSET = "file")
 load("math.star", "math")

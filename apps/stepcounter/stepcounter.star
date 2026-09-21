@@ -1,3 +1,7 @@
+# Modified in this community-maintained version; see Git history for contributors.
+# Original author and license notices are retained below.
+# See README.md for maintenance and compatibility notes.
+
 """Applet: Step Counter
 Author: Matt-Pesce
 Summary: Tracks Daily Step Progress

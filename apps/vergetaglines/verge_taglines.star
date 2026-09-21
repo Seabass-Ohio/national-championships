@@ -1,3 +1,7 @@
+# Modified in this community-maintained version; see Git history for contributors.
+# Original author and license notices are retained below.
+# See ReadMe.md for maintenance and compatibility notes.
+
 """
 Applet: Verge Taglines
 Summary: The Verge's latest tagline
