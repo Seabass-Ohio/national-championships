@@ -49,3 +49,17 @@ were not repeated for this setup-only change.
 Timezone is now a searchable IANA timezone setting. Leave it blank to follow the display timezone. Existing installations retain their previous effective timezone through the reviewed Cloud migration.
 
 Downstream change, original authorship retained. Requires the Niblet runtime with timezone Text metadata. All changed schemas were evaluated with networking denied. Migration and rendering evidence is recorded in the timezone release audit; schema checks alone do not certify live provider behavior.
+
+### Bundled custom logos (September 22, 2026)
+
+The existing Colts and Rams custom logos are now packaged with the app as the
+same image bytes. A timeout on the external Rams image host could previously
+abort an entire all-teams scoreboard and trigger retries. Those two logo lookups
+now work without a network request. ESPN scores and other team logos still use
+their existing providers and cache policy. Settings, ordering and timing are
+unchanged. Asset provenance is recorded in `images/README.md`.
+
+Validation: `tests/nfl_logo_assets.py` compares original image hashes and exact
+rendered bytes at 64x32 and 128x64 with networking denied. Full sports playback,
+timezone and ordering tests are also required. Physical-screen playback is not
+covered by these checks.
