@@ -39,7 +39,7 @@ DEFAULT_LOCATION = """
 REDDIT_API_URL_TEMPLATE = "https://www.reddit.com/r/{}/hot.json?limit=1"
 
 def main(config):
-    location = config.get("location", DEFAULT_LOCATION)
+    location = _timezone_location(config, config.get("location", DEFAULT_LOCATION))
     loc = json.decode(location)
     timezone = loc["timezone"]
     subreddit = (config.get("subreddit") or DEFAULT_SUBREDDIT).strip()
@@ -158,11 +158,14 @@ def get_schema():
                 icon = "reddit",
                 default = DEFAULT_SUBREDDIT,
             ),
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Location for which to display time.",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Toggle(
                 id = "is_24h_format",
@@ -173,3 +176,14 @@ def get_schema():
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

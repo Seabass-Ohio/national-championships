@@ -43,7 +43,7 @@ def main(config):
     am_pm_option = config.get("am_pm_option", "no_am_pm")
     clock_color = config.get("clock_color", DEFAULT_CLOCK_COLOR)
     time_offset = config.get("time_offset", 0)
-    loc = config.get("location")
+    loc = _timezone_location(config, config.get("location"))
     blink_colon = config.bool("blink_colon", False)
     location = json.decode(loc) if loc else {}
     timezone = location.get("timezone", time.tz())
@@ -220,11 +220,14 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Location for time source",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Toggle(
                 id = "24_hour_time",
@@ -270,3 +273,14 @@ def bitread(byte, index):
     if index < 0 or index > 7:
         return "Index out of range"
     return (byte >> index) & 1
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

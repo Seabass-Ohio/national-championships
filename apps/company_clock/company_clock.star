@@ -28,7 +28,7 @@ font = "5x8"
 debug = False
 
 def main(config):
-    timezone = json.decode(config.get("timezone"))["timezone"] if config.get("timezone") != None else "America/New_York"
+    timezone = json.decode(_timezone_location(config, config.get("timezone")))["timezone"] if _timezone_location(config, config.get("timezone")) != None else "America/New_York"
     now = time.now().in_location(timezone)
 
     if debug == True:
@@ -98,11 +98,25 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
+            schema.Text(
                 id = "timezone",
                 name = "Timezone",
-                desc = "Timezone to display",
+                desc = "Leave blank to use the display timezone.",
                 icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

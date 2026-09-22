@@ -71,7 +71,7 @@ def main(config):
     logo = config.str("logo") or IMAGE_WOO_SQUARE_16X16
 
     # Reporting related config options
-    location = config.get("shopLocation")
+    location = _timezone_location(config, config.get("shopLocation"))
     reporting_period = config.get("reportingPeriod") or DEFUALT_REPORTING_PERIOD
 
     # Get shop url config setting
@@ -472,11 +472,14 @@ def get_schema():
                 icon = "key",
                 secret = True,
             ),
-            schema.Location(
-                id = "shopLocation",
-                name = "Shop Location",
-                desc = "Used for the timezone when calculating the reporting period",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Dropdown(
                 id = "reportingPeriod",
@@ -496,3 +499,14 @@ def get_schema():
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

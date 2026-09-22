@@ -47,7 +47,7 @@ AMBER = "#ffb300"
 
 def main(config):
     team = config.get("team", "all")
-    location = json.decode(config.get("location", DEFAULT_LOCATION), {})
+    location = json.decode(_timezone_location(config, config.get("location", DEFAULT_LOCATION)), {})
     tz = location.get("timezone", "America/New_York") if type(location) == "dict" else "America/New_York"
     tz = tz if type(tz) == "string" and tz else "America/New_York"
     now = time.now().in_location(tz)
@@ -254,11 +254,14 @@ def get_schema():
                 options = get_team_options(),
                 default = "all",
             ),
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Used to show game times in your local timezone.",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
         ],
     )
@@ -279,3 +282,14 @@ def get_team_options():
         schema.Option(display = "PWHL Las Vegas", value = "12"),
         schema.Option(display = "PWHL San Jose", value = "13"),
     ]
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

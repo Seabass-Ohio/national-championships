@@ -75,7 +75,7 @@ def render_workaround(months_plot, key, color):
         )
 
 def main(config):
-    location = config.get("location", DEFAULT_LOCATION)
+    location = _timezone_location(config, config.get("location", DEFAULT_LOCATION))
     timezone = json.decode(location)["timezone"]
     date_of_birth = time.parse_time(config.get("date of birth", DEFAULT_DATE_OF_BIRTH))
     years_displayed = int(config.get("years displayed", DEFAULT_YEARS_DISPLAYED))
@@ -184,11 +184,25 @@ def get_schema():
                 desc = "The date on which you were born.",
                 icon = "calendar",
             ),
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Location, used to find your timezone.",
-                icon = "map",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

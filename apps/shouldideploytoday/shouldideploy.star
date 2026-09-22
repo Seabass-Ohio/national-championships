@@ -7,6 +7,7 @@ load("http.star", "http")
 load("re.star", "re")
 load("render.star", "render")
 load("schema.star", "schema")
+load("time.star", "time")
 
 API_URL = "https://shouldideploy.today/api"
 
@@ -45,7 +46,7 @@ def main(config):
     if design not in ["thumbs", "symbols"]:
         design = DEFAULT_DESIGN
 
-    location_cfg = config.get("location", DEFAULT_LOCATION)
+    location_cfg = _timezone_location(config, config.get("location", DEFAULT_LOCATION))
     location = json.decode(location_cfg, {}) if type(location_cfg) == "string" and len(location_cfg) <= 4096 else {}
     timezone = location.get("timezone", "UTC") if type(location) == "dict" else "UTC"
     if type(timezone) != "string" or len(timezone) > 100 or (timezone != "UTC" and not re.match(r"^[A-Za-z0-9_+.-]+(/[A-Za-z0-9_+.-]+)+$", timezone)):
@@ -113,11 +114,14 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Location for which to determine ideal deployment.",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Dropdown(
                 id = "design-choice",
@@ -138,3 +142,14 @@ def get_schema():
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

@@ -54,7 +54,7 @@ def main(config):
     show = config.bool("choice_show", DEFAULT_SHOW)
 
     # Determine hemisphere for correct season rendering
-    location = config.get("choice_loc", DEFAULT_LOCATION)
+    location = _timezone_location(config, config.get("choice_loc", DEFAULT_LOCATION))
     loc = json.decode(location)
     lat = float(loc["lat"])
 
@@ -326,11 +326,27 @@ def get_schema():
             ),
 
             # Select location
-            schema.Location(
-                id = "choice_loc",
-                name = "Location",
-                icon = "locationDot",
-                desc = "Your location changes which environments are displayed",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
+            schema.Dropdown(id = "hemisphere", name = "Hemisphere", desc = "Used for seasons and moon orientation.", icon = "earth", default = "northern", options = [schema.Option(display = "Northern", value = "northern"), schema.Option(display = "Southern", value = "southern")]),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    location["lat"] = "-1" if config.get("hemisphere", "northern") == "southern" else "1"
+    return json.encode(location)

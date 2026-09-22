@@ -274,11 +274,13 @@ def get_schema():
                 icon = "calendar",
             ),
             schema.Text(
+                format = "timezone",
+                time_context = True,
                 id = "timezone",
                 name = "Timezone",
                 desc = "Your timezone (e.g. America/New_York)",
                 icon = "clock",
-                default = "America/New_York",
+                default = "",
             ),
             schema.Toggle(
                 id = "text_only",
@@ -293,3 +295,5 @@ def get_schema():
             schema.Color(id = "event_text_color", name = "Event Text Color", desc = "Text color for the event display", icon = "font", default = "#7FFF7F"),
         ],
     )
+
+# Downstream modification: standardized timezone selection and effective render context.

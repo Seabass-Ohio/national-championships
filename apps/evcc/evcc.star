@@ -33,6 +33,7 @@ load("images/solarenergy_icon.png", SOLARENERGY_ICON_ASSET = "file")
 load("images/sun_icon.png", SUN_ICON_ASSET = "file")
 load("render.star", "render")
 load("schema.star", "schema")
+load("time.star", "time")
 
 CAR0_ICON = CAR0_ICON_ASSET.readall()
 CAR1_BLUE_ICON = CAR1_BLUE_ICON_ASSET.readall()
@@ -101,7 +102,7 @@ def main(config):
     if api_key == None:
         return api_error()
 
-    location = config.get("location")
+    location = _timezone_location(config, config.get("location"))
     loc = json.decode(location, None) if type(location) == "string" and location and len(location) <= 8192 else None
     loc = loc if type(loc) == "dict" else DEFAULT_LOCATION
     timezone = safe_timezone(loc.get("timezone", DEFAULT_TIMEZONE))
@@ -610,11 +611,25 @@ def get_schema():
                 icon = "car",
                 default = "mycar",
             ),
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Your device location",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

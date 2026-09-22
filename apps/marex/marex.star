@@ -307,6 +307,8 @@ def get_schema():
                 icon = "anchor",
             ),
             schema.Text(
+                format = "timezone",
+                time_context = True,
                 id = "timezone",
                 name = "Timezone",
                 desc = "IANA timezone used to choose today's tide table.",
@@ -368,3 +370,5 @@ def zero_pad(value):
         return "0%s" % value
 
     return str(value)
+
+# Downstream modification: standardized timezone selection and effective render context.

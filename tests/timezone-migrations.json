@@ -1,0 +1,555 @@
+[
+  {
+    "app_id": "abstract-clock",
+    "source_path": "apps/abstractclock/abstract_clock.star",
+    "previous_sha256": "ae86f839b3f0690926c895e75f1c184170fda4bede16efc7cf028e7932bc65b8",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "analog-clock",
+    "source_path": "apps/analogclock/analog_clock.star",
+    "previous_sha256": "f2a8785a428ee0260747f334b31a3e35aeb3ae5edff01143b39e855b48f989d3",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "analog-time",
+    "source_path": "apps/analogtime/analog_time.star",
+    "previous_sha256": "f0b1104bef5c806bd676dff34a053da82aaa35151f4e311c9c6c747b5f1f71c8",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "astral-clock",
+    "source_path": "apps/astralclock/astralclock.star",
+    "previous_sha256": "458dd29b21f49b775b0e55b2cf0fb45d81cbd7ce2fe8ecbda3059c5b96deb0b4",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "binary-clock",
+    "source_path": "apps/binaryclock/binary_clock.star",
+    "previous_sha256": "01c18cb1243e11eaca0ffaa6e662c1638bb2a17876f6d3cad3be9ff3d3756d6c",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "burgerotd",
+    "source_path": "apps/burgeroftheday/burgerotd.star",
+    "previous_sha256": "0e332f1d598651633686b42685adea9df8489643b6c89395a0ed5fe08e6671f9",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "calendar-visualizer",
+    "source_path": "apps/calendar_visualizer/calendar_visualizer.star",
+    "previous_sha256": "f0be2f602771f148f602bc629325d3e9e781f3f12b3b30d30551a4039917b3b6",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "calendars",
+    "source_path": "apps/calendars/calendars.star",
+    "previous_sha256": "f0382628fef5acbc9926108a8f7f307c81689c69dd5baba711bce14ed1150f0f",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "checkiday",
+    "source_path": "apps/checkiday/checkiday.star",
+    "previous_sha256": "6d0ef4561a09e0047e5f923721c5f4c06a8050174c1ae5e4efb1488421a3d541",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "clockwithseconds",
+    "source_path": "apps/clockwithseconds/clockwithseconds.star",
+    "previous_sha256": "9a2acfa808dbd50ec3d8a488c32944261d568f1646284905ecb73a9394dd5f9a",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "colorful-clock",
+    "source_path": "apps/colorfulclock/colorful_clock.star",
+    "previous_sha256": "b4252f236d7d30b50aacf54baccfe42d529cd2d22f81c8d92441acfc95756021",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "company-clock",
+    "source_path": "apps/company_clock/company_clock.star",
+    "previous_sha256": "b6a2675612d0430a9b31f70a9cf569d38b7e92fea9688291fadb8eb1bc5a5afe",
+    "location_field": "timezone",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "countdowntimer",
+    "source_path": "apps/countdowntimer/countdowntimer.star",
+    "previous_sha256": "49fa6d235f9ceab3f6043133aac76e4e41524e77bfb9bb911624955fd47c8886",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "cpbl-live-score",
+    "source_path": "apps/cpblLivescore/cpbl_live_score.star",
+    "previous_sha256": "da7eba1bd16b5cac6768e2dfb630adc2e915a37989b0f23b5bbe6632d4c7fdd6",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "cpbl-scoreboard",
+    "source_path": "apps/cpblscores-betsapi/cpbl_scoreboard.star",
+    "previous_sha256": "f9bac6785a5ecb7a557960f19b32751ee4f3059d31c7983d48645c2ca4e27a2a",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "cpbl-scores",
+    "source_path": "apps/cpblscores/cpbl_scores.star",
+    "previous_sha256": "d3f7401eb3090e20e7ef6dcb2800defb6bcc419be0bc8469d69e53ab0112f8a1",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "custom-clock",
+    "source_path": "apps/customclock/custom_clock.star",
+    "previous_sha256": "a79c5479dd40e98a2dcc11c548f14f1eb275d9d0f31211faafb72b004b0700a4",
+    "location_field": "location",
+    "kind": "timezone-and-label"
+  },
+  {
+    "app_id": "daily-reminder",
+    "source_path": "apps/dailyreminder/daily_reminder.star",
+    "previous_sha256": "7396dec7d11c5b9ff9c54c8f48d2bea5c9b0d084204c5c0f0ddc34022315ad03",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "date-progress",
+    "source_path": "apps/dateprogress/date_progress.star",
+    "previous_sha256": "e228b00f05e3279d73bdb728b2eb67a1550c26255a9d6ea151a1a6c91854eb85",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "date-time-clock",
+    "source_path": "apps/datetimeclock/date_time_clock.star",
+    "previous_sha256": "65f0fdfd3abce557a0b60e83cd141c44c9ff393cc65e2a81ef23fb1a97902d37",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "dutch-fuzzy-clock",
+    "source_path": "apps/dutchfuzzyclock/dutch_fuzzy_clock.star",
+    "previous_sha256": "caf7bb92aa67189f959701639a0f4c8629d09514ea36a12a0927f9687d91f1bc",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "evcc",
+    "source_path": "apps/evcc/evcc.star",
+    "previous_sha256": "69445269a1cc3dda264ce9a6132e8070e2db9c22c483637df3086ed56a91a77a",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "exotic-clocks",
+    "source_path": "apps/exotic_clocks/exotic_clocks.star",
+    "previous_sha256": "45f700e3acdba4f5138bd39a6f34b2c4610b6101a65cf15340271200a25ba5f8",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "finaza-stocks",
+    "source_path": "apps/finazastocks/finaza_stocks.star",
+    "previous_sha256": "a1eb2a77038060d190341cc7d905b9b5288f38b42fd694632afa8567daaed32d",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "fireflies",
+    "source_path": "apps/fireflies/fireflies.star",
+    "previous_sha256": "42bfa3441472f9f90f1effcdce464ecbe260f0b1389328918489552abf103afd",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "fullybinarytime",
+    "source_path": "apps/fullybinarytime/fullybinarytime.star",
+    "previous_sha256": "730d7b12db199c87a37845b6628da5b388069572d660ebd3ef4bc451efd34f2a",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "fuzzy-clock",
+    "source_path": "apps/fuzzyclock/fuzzy_clock.star",
+    "previous_sha256": "4d9c070bf7f5ebdecfdd92f2195818f14b84b4e2f5639f842a4a317ab6cfff8b",
+    "location_field": "location",
+    "kind": "unused-location"
+  },
+  {
+    "app_id": "hass-graph",
+    "source_path": "apps/hassgraph/hass_graph.star",
+    "previous_sha256": "1069f65a4d5c62251b1f00413de4ba43b179bd16a79d154a72baffc4d0e20772",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "hello-cal",
+    "source_path": "apps/hellocal/hellocal.star",
+    "previous_sha256": "10979676ba0f790927f7eb3479d7bcc743ee81ccea6587a4bd819a1e3d26b884",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "hex-color-clock",
+    "source_path": "apps/hexcolorclock/hex_color_clock.star",
+    "previous_sha256": "191ca30d7d3015cb815ac1a93cb9b06898f908e774b29fc7ab8185e60d515deb",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "hilbert-clock",
+    "source_path": "apps/hilbertclock/hilbert_clock.star",
+    "previous_sha256": "f06af2d7a95d6a1afa8219b1efbe07d7404f1c94d2983df73d400817442ffc9e",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "hrbfc",
+    "source_path": "apps/hrbfc/hrbfc.star",
+    "previous_sha256": "0f1296258a0aaa6de677c5759bd82a9997563dce67a0731bc4b340e3b9cc61c2",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "income-counter",
+    "source_path": "apps/incomecounter/income_counter.star",
+    "previous_sha256": "c94a6048f4b488f2b4cec21ca84b7a57e6f1cdc112fc8ea375fe5e227ab82438",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "is-it-christmas",
+    "source_path": "apps/isitchristmas/is_it_christmas.star",
+    "previous_sha256": "917343f6784769e4959543daa079f8abb9d244098942445c2d53624cb78b3737",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "lake-lanier-water-level",
+    "source_path": "apps/lake-lanier-water-level/lanier_level.star",
+    "previous_sha256": "765e92f10d715f3cba64f085c4169f9cf89e4c88151335242c53587700fbb084",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "launchcountdown",
+    "source_path": "apps/launchcountdown/launchcountdown.star",
+    "previous_sha256": "9bd6807520195d10131a9db61b827bd9cbe8581c4377e1fc9895f18c375ac1b3",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "life-clock",
+    "source_path": "apps/lifeclock/life_clock.star",
+    "previous_sha256": "06c4cf7c0dcb39fb5f0c4c39230f2edc44ccd7e544c7c176f1adf4c125a1fef5",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "life-counter",
+    "source_path": "apps/lifecounter/life_counter.star",
+    "previous_sha256": "ec44178142b29701e34f6deeb37d93817c6eadde7e14d559a2658c9ebe0cb0eb",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "local-tides",
+    "source_path": "apps/localtides/local_tides.star",
+    "previous_sha256": "bdfeab60349504b07c00c134bf99c89abd6b06cb6152de6381e41b372f6722c9",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "loterias",
+    "source_path": "apps/loterias/loterias.star",
+    "previous_sha256": "5d8ad96d3debf442547289565e97f3bc2c31162ad6b7b8e39d97f7d2fa55c9fa",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "math-clock",
+    "source_path": "apps/mathclock/math_clock.star",
+    "previous_sha256": "f447dbd9aa1939ca638ce688f6b37579d90d81fb8962aa025f6565ebdd8f27c9",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "meeting-stats",
+    "source_path": "apps/meeting_stats/meeting_stats.star",
+    "previous_sha256": "1b175d747c5ab6389f31fde501df3bc4532a92bd1fa2e491de33741e090353b0",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "mhky-scores",
+    "source_path": "apps/mhkyscores/mhky_scores.star",
+    "previous_sha256": "ed585e1d56f9bc1f279ea41dd6376c5e149672a79ec861871affbc60d5d3d874",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "mlb-standings",
+    "source_path": "apps/mlbstandings/mlb_standings.star",
+    "previous_sha256": "39cdb7f61d5b535c15500fd99d95fbef28a87b072272277421b33a476c4aab10",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "nba-standings",
+    "source_path": "apps/nbastandings/nba_standings.star",
+    "previous_sha256": "33f2e2f980db882bf9492a9581d9484c3e4d398010de64775faa7c1d57513b13",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "nes-clock",
+    "source_path": "apps/nesclock/nes_clock.star",
+    "previous_sha256": "8ff6176d905d6035f7301ab22a9f30f979efd495c34153e0f15d5ed7adb61761",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "next-event",
+    "source_path": "apps/nextevent/next_event.star",
+    "previous_sha256": "94889d42ea24196ea28a3605e1b8f518cee00597d8ad79a197396fa44531488a",
+    "location_field": "loc",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "nfl-standings",
+    "source_path": "apps/nflstandings/nfl_standings.star",
+    "previous_sha256": "524857813477a0a5ce84db4a3efac5157f271122dd4eff5670d9fa0f1e08bf1b",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "nhl-live",
+    "source_path": "apps/nhllive/nhl_live.star",
+    "previous_sha256": "d0ddbe802cb753d3e626745690e2c1153b50b338f18bfad1f0d6570db91b94e3",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "nhl-standings",
+    "source_path": "apps/nhlstandings/nhl_standings.star",
+    "previous_sha256": "3bbb7374d364d27f1c6debafd35dd87eb84b129edefab96fd7656a8325a23413",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "one-piece-bdays",
+    "source_path": "apps/onepiecebdays/one_piece_bdays.star",
+    "previous_sha256": "db5b8aeb52fc8a3c074688dc3a4744a642179c599c17ca757b0fd8cba7ac0a41",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "outlook-calendar",
+    "source_path": "apps/outlookcalendar/outlook_calendar.star",
+    "previous_sha256": "0ac88a6229d617ee98d3c56f693200bdc9d520800e74944d444415ba5928d679",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "petpikachu",
+    "source_path": "apps/petpikachu/petpikachu.star",
+    "previous_sha256": "d0b79f6d17053130e71027a41908f39263bce71d8bb341c1a25c23e81548105d",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "phase-of-moon",
+    "source_path": "apps/phaseofmoon/phase_of_moon.star",
+    "previous_sha256": "87897371b669817ec585ca715ba3bf48d161508c0f311f8b8807e02bece731b7",
+    "location_field": "location",
+    "kind": "timezone-and-hemisphere"
+  },
+  {
+    "app_id": "pwhl-scores",
+    "source_path": "apps/pwhlscores/pwhlscores.star",
+    "previous_sha256": "ba541ba676b55d24593d5f0fb4d715514592416406477650b8e6df4e11ec377c",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "retrograde-planet",
+    "source_path": "apps/retrogradeplanet/retrograde_planet.star",
+    "previous_sha256": "d03f3c7d091ed197ad92b50be4b1f5a761854ac511f5cc2f62eddabed93e8a9d",
+    "location_field": "timezone",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "season-clock",
+    "source_path": "apps/seasonclock/seasonclock.star",
+    "previous_sha256": "997deddadeead769e545c5ecd8ad0528451ec36142df00f962472a202a258518",
+    "location_field": "location",
+    "kind": "timezone-and-hemisphere"
+  },
+  {
+    "app_id": "shopify-chart",
+    "source_path": "apps/shopifychart/shopify_chart.star",
+    "previous_sha256": "ffa95ee3861f727e241e0bd4d57a15665632f00aa6c359bfb93c0d6168d4d0a8",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "shouldideploy",
+    "source_path": "apps/shouldideploytoday/shouldideploy.star",
+    "previous_sha256": "21804b0a351cb4f78e7339a13c3a74f38be0af11dded9c088056dc486a744ec0",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "snakeclock",
+    "source_path": "apps/snakeclock/snake_clock.star",
+    "previous_sha256": "c6d287400d53a100f7aff02bd1832966b7834dc7462f750f89de004b30d29c08",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "sonic-the-hedgehog-clock",
+    "source_path": "apps/sonicthehedgehogclock/sonicthehedgehogclock.star",
+    "previous_sha256": "0cc1c0b03c475b84d79c75bc73312e5d10f4e11db5d04c91f0ac910c3ac30a54",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "splat3-challenges",
+    "source_path": "apps/splat3challenges/splat3_challenges.star",
+    "previous_sha256": "bd4e5d3c3f17808fd9eea300c6eb21240be71a75ab9219dc4a5ce997ed01618f",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "sports-scoreboard",
+    "source_path": "apps/sportsscoreboard/sports_scoreboard.star",
+    "previous_sha256": "eac2f2154976ed0a992decb1bf043e351e9db119127fb21d94d41d4d10d7560b",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "stardate-clock",
+    "source_path": "apps/stardateclock/stardate.star",
+    "previous_sha256": "b3d5fd14232f3fb13861af44d82c746fbaa8d4e247e073d0ec56ec466716d99d",
+    "location_field": "location",
+    "kind": "timezone-and-label"
+  },
+  {
+    "app_id": "subreddit",
+    "source_path": "apps/subreddit/subreddit.star",
+    "previous_sha256": "ba5778db865621fafbf6bbdf2444a4ab9e2d50346771cf03d69216b92c367480",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "summer-countdown",
+    "source_path": "apps/summercountdown/summer_countdown.star",
+    "previous_sha256": "c852e1fc38d5fa902f8361e7ed2724ef1c3e22de450b02a6e6883efb72a64970",
+    "location_field": "location",
+    "kind": "timezone-and-hemisphere"
+  },
+  {
+    "app_id": "switchboard",
+    "source_path": "apps/switchboard/switchboard.star",
+    "previous_sha256": "62baf967ce3050e5ad66ed5798b5c89bad86444f8495575e0a9504106d2ac70e",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "tetris-clock",
+    "source_path": "apps/tetrisclock/tetris_clock.star",
+    "previous_sha256": "5337439f7bb0d2b82ca49e7e09f3bf2e25e5277e29eb30f1b9352232d11aa1f2",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "tides-and-temp",
+    "source_path": "apps/tidesandtemp/tides_and_temp.star",
+    "previous_sha256": "8510f4dd317d20def494c051596097d3325362263b48502331e8324bb5069069",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "tix-clock",
+    "source_path": "apps/tixclock/tix_clock.star",
+    "previous_sha256": "ad0db5a159cd443ad0f92ce870c0ec51a3685297b9c8b3c9e5eb664b5aa20407",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "todoist-routines",
+    "source_path": "apps/todoistroutines/todoist_routines.star",
+    "previous_sha256": "76b3b61990d3c83513bbccbaac6c9264e012885544fba6e9b7d2ca0096ac87f9",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "ufl-scores",
+    "source_path": "apps/uflscores/ufl_scores.star",
+    "previous_sha256": "72bcbdc49415017c1589575af971e5b1338135879851e6ea4cf970f275c0e217",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "underwater-clock",
+    "source_path": "apps/underwaterclock/underwater_clock.star",
+    "previous_sha256": "70e1d02e01d809e2f0e4cac9ae98e98b8cc28d294e6988eabc2446a2019d6b3b",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "universal-ical",
+    "source_path": "apps/universalical/universal_ical.star",
+    "previous_sha256": "24fc68934d65c5b637cf57b6226b23fe2d06650d50328782f7f34cf86a6d811e",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "virtual-pets",
+    "source_path": "apps/virtualpets/virtual_pets.star",
+    "previous_sha256": "de59b4bf6c96348af349b6880c8edec974e2ae9d0ac4c4e29e57553524ad73f0",
+    "location_field": "choice_loc",
+    "kind": "timezone-and-hemisphere"
+  },
+  {
+    "app_id": "wbc-scores",
+    "source_path": "apps/wbcscores/wbc_scores.star",
+    "previous_sha256": "ba8f0977d0e9295b2f6d26e2eb748da3bc1d1309a7dd43fa455b6234a47ee404",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "woocommercestats",
+    "source_path": "apps/woocommercestats/woocommerce_stats.star",
+    "previous_sha256": "d3bbb7bb4485c661ae188111277cfe2fd0d4b832a60101b228da77fe99504b69",
+    "location_field": "shopLocation",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "word-clock",
+    "source_path": "apps/wordclock/word_clock.star",
+    "previous_sha256": "b9e5f4990cff4d91eb6f5a619e334b1f4d09915d865d88488cc1a7a3fd0750be",
+    "location_field": "location",
+    "kind": "timezone-only"
+  },
+  {
+    "app_id": "xfl-scores",
+    "source_path": "apps/xflscores/xfl_scores.star",
+    "previous_sha256": "1e7a64fe83fbe51dbb8a3b0ba695b5cd0f50139ce31afb78cf1ecfd55fcecefd",
+    "location_field": "location",
+    "kind": "timezone-only"
+  }
+]

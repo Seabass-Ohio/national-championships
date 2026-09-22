@@ -107,7 +107,7 @@ FW4 = base64.decode("iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAAV0lEQVR42mN
 
 def main(config):
     tz = LOCATION
-    location_str = config.get("location")
+    location_str = _timezone_location(config, config.get("location"))
     if location_str and location_str.startswith("{"):
         loc = json.decode(location_str)
         if loc != None:
@@ -149,11 +149,14 @@ def get_schema():
                 desc = "Enter your Google calendar's secret address in iCal format. You can find it in your calendar settings.",
                 icon = "calendar",
             ),
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Used to show dates and times in your local timezone.",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Toggle(
                 id = "alert_enabled",
@@ -1011,3 +1014,14 @@ def format_time(t):
     if minute < 10:
         mm = "0" + mm
     return str(h12) + ":" + mm + " " + suffix
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

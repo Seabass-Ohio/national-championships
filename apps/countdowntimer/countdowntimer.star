@@ -12,7 +12,7 @@ DEFAULT_TIMEZONE = "UTC"
 def get_timezone(config):
     # Location values contain an IANA timezone. Never use the renderer host's
     # local offset: IANA rules keep wall-clock deadlines correct across DST.
-    raw_location = config.get("location")
+    raw_location = _timezone_location(config, config.get("location"))
     if not raw_location:
         return DEFAULT_TIMEZONE
     location = json.decode(raw_location)
@@ -442,11 +442,14 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
-                id = "location",
+            schema.Text(
+                id = "timezone",
                 name = "Timezone",
-                desc = "Timezone used to interpret and display the deadline",
-                icon = "locationDot",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Text(
                 id = "title",
@@ -692,3 +695,14 @@ def get_schema():
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

@@ -32,7 +32,7 @@ def main(config):
         missing_parameter = "Missing Store Name"
     if missing_parameter:
         return error_view(missing_parameter)
-    location = config.get("location") or None
+    location = _timezone_location(config, config.get("location")) or None
     timezone = "America/New_York"
     if location:
         location = json.decode(location)
@@ -225,11 +225,14 @@ def get_schema():
                 desc = "The company name to display",
                 icon = "signHanging",
             ),
-            schema.Location(
-                id = "location",
-                name = "Store Location",
-                desc = "The location timezone to use to calculate daily metrics.",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Dropdown(
                 id = "metric",
@@ -506,3 +509,14 @@ def is_response_error(response):
         return True
     else:
         return False
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

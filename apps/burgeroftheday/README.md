@@ -13,3 +13,8 @@ See [known compatibility differences](../../docs/COMPATIBILITY.md) and [maintena
 Displays the Burger of the Day from the show "Bob's Burgers". A different burger will show up each day, or optionally you can show a random burger each cycle, or a custom burger. Burger data is gathered from by the [Bob's Burgers fandom site](https://bobs-burgers.fandom.com/wiki/Burger_of_the_Day).
 
 ![Burger of the Day Applet for Tidbyt](burgerotd1.png) ![Burger of the Day Applet for Tidbyt](burgerotd2.png)
+## Timezone settings (September 2026)
+
+Timezone is now a searchable IANA timezone setting. Leave it blank to follow the display timezone. Existing installations retain their previous effective timezone through the reviewed Cloud migration.
+
+Downstream change, original authorship retained. Requires the Niblet runtime with timezone Text metadata. All changed schemas were evaluated with networking denied. Migration and rendering evidence is recorded in the timezone release audit; schema checks alone do not certify live provider behavior.

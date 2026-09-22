@@ -32,7 +32,7 @@ DATETIME_FORMAT = "2006-01-02 15:04"
 TIME_FORMAT = "03:04 PM"
 
 def main(config):
-    location = config.get("location")
+    location = _timezone_location(config, config.get("location"))
     timezone = json.decode(location).get("timezone") if location else TIMEZONE_DEFAULT
     noaaTidesStationID = config.str("noaaTidesStationID", str(NOAA_TIDES_STATION_ID_DEFAULT))
     ndbcBuoyStationID = config.str("ndbcBuoyStationID", str(NDBC_BUOY_STATION_ID_DEFAULT))
@@ -146,11 +146,14 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Location for timezone",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Text(
                 id = "noaaTidesStationID",
@@ -189,3 +192,14 @@ def get_schema():
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

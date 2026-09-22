@@ -24,7 +24,7 @@ MAX_LINES = 20000
 DAY_SECONDS = 24 * 60 * 60
 
 def main(config):
-    location_value = config.str("loc")
+    location_value = _timezone_location(config, config.str("loc"))
     location = json.decode(location_value, None) if location_value else None
     timezone = location.get("timezone", time.tz()) if type(location) == "dict" else time.tz()
     url = config.str("url", DEFAULT_ICS_URL)
@@ -215,8 +215,27 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(id = "loc", name = "Location", desc = "Location for timezone awareness", icon = "locationDot"),
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
+            ),
             schema.Text(id = "url", name = "iCalendar URL", desc = "A private Google or Outlook HTTPS iCalendar URL.", icon = "calendar", default = DEFAULT_ICS_URL, secret = True),
             schema.Text(id = "title", name = "Title", desc = "The heading displayed above the next event.", icon = "calendar", default = DEFAULT_TITLE),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)
