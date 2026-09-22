@@ -12,3 +12,22 @@ See [known compatibility differences](../../docs/COMPATIBILITY.md) and [maintena
 ### September 21 score-data resilience
 
 Edwin adapted the missing-odds and series-summary fixes from [Luke Solomon’s upstream change](https://github.com/tronbyt/apps/commit/edf5e1f5cb7ff319e8d805ae6a6f7325b1a51cf2) across the score apps. Missing optional odds, series summaries, or notes no longer abort playback. Unavailable odds stay blank; scores and final status remain visible. Existing settings, game ordering, and card timing are preserved. Offline missing-field and full-sequence renders are covered by `tests/sports_playback.py`; this does not certify provider availability or physical display playback.
+
+### Timezone setup (local change)
+
+The Location prompt is replaced by an optional **Timezone** field. Leave it
+blank to follow the device timezone, or enter an IANA name such as
+`America/New_York` or `Europe/London`. A host that supplies no device timezone
+uses UTC. Coordinates and city lookup are no longer needed.
+
+Cloud's reviewed upgrade copies the old location timezone into the new field,
+preserving saved choices and the previous New York default when no location was
+saved. Clear the migrated field to follow the device instead. The app also
+accepts a legacy location in direct render configurations when the new field
+is absent. Teams, styling, ordering, card timing and refresh behavior are unchanged.
+This requires a new catalog release and configuration migration; it is not live.
+
+Validation: all 12 timezone/schema cases and the existing full sports playback
+regression passed with the card-capable Niblet runtime, with network access
+denied. Formatter and lint passed. Live provider and physical-screen checks
+were not repeated for this setup-only change.

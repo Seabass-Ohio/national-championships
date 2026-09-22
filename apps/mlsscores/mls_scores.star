@@ -16,16 +16,6 @@ load("schema.star", "schema")
 load("time.star", "time")
 
 CACHE_TTL_SECONDS = 60
-DEFAULT_LOCATION = """
-{
-    "lat": "40.6781784",
-    "lng": "-73.9441579",
-    "description": "Brooklyn, NY, USA",
-    "locality": "Brooklyn",
-    "place_id": "ChIJCSF8lBZEwokRhngABHRcdoI",
-    "timezone": "America/New_York"
-}
-"""
 LEAGUE_DISPLAY = "MLS"
 LEAGUE_DISPLAY_OFFSET = -3
 SPORT = "soccer"
@@ -78,6 +68,20 @@ MAGNIFY_LOGO = """
 }
 """
 
+def scoreboard_timezone(config):
+    timezone = config.get("timezone")
+    if timezone == None:
+        # Preserve direct users of the old saved location format.
+        location = config.get("location")
+        if location:
+            timezone = json.decode(location).get("timezone")
+    if not timezone or not timezone.strip():
+        timezone = config.get("$tz", "UTC")
+    timezone = timezone.strip()
+    if not time.is_valid_timezone(timezone):
+        fail("Enter a valid timezone, such as America/New_York, or leave Timezone blank to use the device timezone.")
+    return timezone
+
 def main(config):
     renderCategory = []
     selectedTeam = config.get("selectedTeam", "all")
@@ -86,9 +90,7 @@ def main(config):
     displayTop = config.get("displayTop", "league")
     timeColor = config.get("displayTimeColor", "#FFA500")
     rotationSpeed = config.get("rotationSpeed", "5")
-    location = config.get("location", DEFAULT_LOCATION)
-    loc = json.decode(location)
-    timezone = loc["timezone"]
+    timezone = scoreboard_timezone(config)
     now = time.now().in_location(timezone)
     datePast = time.parse_time(now.format("20060102"), format = "20060102") - time.parse_duration("%dh" % 1 * 24)
     dateFuture = time.parse_time(now.format("20060102"), format = "20060102") + time.parse_duration("%dh" % 6 * 24)
@@ -773,11 +775,12 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Location for which to display time.",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the device timezone. To override, enter a timezone such as America/New_York or Europe/London.",
+                icon = "clock",
+                default = "",
             ),
             schema.Dropdown(
                 id = "selectedTeam",
