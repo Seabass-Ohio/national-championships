@@ -400,7 +400,7 @@ def main(config):
         print("iCal fetch failed with status %d" % rep.status_code)
         return render.Root(child = render.Text("Calendar unavailable", font = "tom-thumb"))
 
-    location_data = json.decode(config.get("location", DEFAULT_LOCATION))
+    location_data = json.decode(_timezone_location(config, config.get("location", DEFAULT_LOCATION)))
     timezone = location_data.get("timezone", time.tz())
 
     # Get real D&T:
@@ -575,9 +575,28 @@ def get_schema():
         fields = [
             schema.Text(id = "calendar_url", name = "Calendar URL", desc = "Google Calendar secret or public iCal URL", icon = "calendar", secret = True),
             schema.Dropdown(id = "ttl", name = "Refresh Rate", desc = "iCal cache interval", icon = "clock", default = "3600", options = ttl_options),
-            schema.Location(id = "location", name = "Location", desc = "Location timezone", icon = "locationDot"),
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
+            ),
             schema.Toggle(id = "24hour_format", name = "24-Hour Clock", desc = "Display 24-hour time", icon = "clock", default = False),
             # schema.Toggle(id = "flash_colon", name = "Flashing Colon", desc = "Flash the clock's colon", icon = "clock", default = True),
             schema.Toggle(id = "flash_time_dot", name = "Flash Time Dot", desc = "Flash the graph's current time dot", icon = "clock", default = True),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

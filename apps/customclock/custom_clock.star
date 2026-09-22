@@ -27,7 +27,7 @@ DEFAULT_COLOR = "fff"
 
 def main(config):
     #get time
-    location_info = json.decode(config.get("location", DEFAULT_LOCATION))  #may need locality later, which is why do this in two steps
+    location_info = json.decode(_timezone_location(config, config.get("location", DEFAULT_LOCATION)))  #may need locality later, which is why do this in two steps
     timezone = location_info["timezone"]
     now = time.now().in_location(timezone)
 
@@ -113,12 +113,16 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Location for which to display time.",
-                icon = "locationArrow",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
+            schema.Text(id = "timezone_label", name = "Location label", desc = "Text displayed with the time.", icon = "label", default = ""),
             schema.Toggle(
                 id = "location_text",
                 name = "Display location",
@@ -179,3 +183,15 @@ def get_schema():
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    location["locality"] = config.get("timezone_label", "")
+    return json.encode(location)

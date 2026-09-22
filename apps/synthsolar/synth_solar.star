@@ -606,11 +606,13 @@ def get_schema():
                 secret = True,
             ),
             schema.Text(
+                format = "timezone",
+                time_context = True,
                 id = "timezone",
                 name = "Timezone",
                 desc = "User's timezone",
                 icon = "clock",
-                default = "Europe/London",
+                default = "",
             ),
             schema.Dropdown(
                 id = "mode",
@@ -832,3 +834,5 @@ def main(config):
             ],
         ),
     )
+
+# Downstream modification: standardized timezone selection and effective render context.

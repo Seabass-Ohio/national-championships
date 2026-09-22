@@ -132,8 +132,8 @@ def main(config):
     """Main applet function."""
 
     # --- Configuration ---
-    location_json_str = config.get("timezone")
-    timezone_id = "America/Dallas"  # Default timezone
+    location_json_str = _timezone_location(config, config.get("timezone"))
+    timezone_id = "UTC"  # Default timezone
     if location_json_str:
         location_data = json.decode(location_json_str, None)
         if type(location_data) == "dict" and location_data.get("timezone"):
@@ -352,11 +352,14 @@ def get_schema():
                 default = default_font_schema,
                 options = get_schema_options(default_font_schema),
             ),
-            schema.Location(
+            schema.Text(
                 id = "timezone",
-                name = "Location",
-                desc = "Select location for accurate dates.",
-                icon = "locationDot",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Text(
                 id = "scroll",
@@ -367,3 +370,14 @@ def get_schema():
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

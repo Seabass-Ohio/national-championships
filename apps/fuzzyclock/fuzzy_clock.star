@@ -369,12 +369,6 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
-                id = "location",
-                name = "Location",
-                icon = "locationDot",
-                desc = "Location for which to display time",
-            ),
             schema.Dropdown(
                 id = "dialect",
                 name = "Language",
@@ -385,3 +379,5 @@ def get_schema():
             ),
         ],
     )
+
+# Downstream modification: remove unused Location setup; retain display timezone behavior.

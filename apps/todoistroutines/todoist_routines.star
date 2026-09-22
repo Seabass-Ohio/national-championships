@@ -78,11 +78,14 @@ def get_schema():
                 desc = "A background photo to display.",
                 icon = "image",
             ),
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Your location to determine when a new day begins.",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Text(
                 id = "start_hour",
@@ -121,7 +124,7 @@ def get_task_dots(config):
     subtask_color = config.str("subtask_color")
     padding_color = "#0000"
 
-    location = json.decode(config.get("location", DEFAULT_LOCATION))
+    location = json.decode(_timezone_location(config, config.get("location", DEFAULT_LOCATION)))
     current_hour = time.now().in_location(location["timezone"]).hour
     start_hour = int(config.str("start_hour", "0"))
 
@@ -183,3 +186,14 @@ def to_grouped_index(items, get_key):
 
 def render_message(message):
     return render.Box(color = "#000", child = render.WrappedText(message, color = "#FFF"))
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

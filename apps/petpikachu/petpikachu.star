@@ -277,7 +277,7 @@ def main(config):
         FRAME_DELAY = animationName[5]
         return FRAME_DELAY
 
-    LOCATION = config.get("location")
+    LOCATION = _timezone_location(config, config.get("location"))
     LOCATION = json.decode(LOCATION) if LOCATION else {}
     TIME_ZONE = LOCATION.get(
         "timezone",
@@ -439,11 +439,14 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "So Pikachu's activities match the time of day",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
         ],
     )
@@ -1062,3 +1065,14 @@ CHILLMAG = [
     0,
     250,
 ]
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

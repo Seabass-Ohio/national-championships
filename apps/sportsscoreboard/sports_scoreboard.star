@@ -201,7 +201,7 @@ def render_event_status(event, timezone):
         ]
 
 def main(config):
-    location = config.get("location", DEFAULT_LOCATION)
+    location = _timezone_location(config, config.get("location", DEFAULT_LOCATION))
     loc = json.decode(location, {}) if type(location) == "string" and len(location) <= 4096 else {}
     timezone = loc.get("timezone", "UTC") if type(loc) == "dict" else "UTC"
     if type(timezone) != "string" or not time.is_valid_timezone(timezone):
@@ -371,11 +371,25 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Location for diplaying local game times.",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
         ] + nfl_options + mlb_options + nba_options + nhl_options,
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

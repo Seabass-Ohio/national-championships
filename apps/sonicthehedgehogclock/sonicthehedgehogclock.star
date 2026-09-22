@@ -133,7 +133,7 @@ def get_clock(timezone, color):
 def main(config):
     bg_id = config.get("background") or DEFAULT_BACKGROUND
     c_id = config.get("character") or DEFAULT_CHARACTER
-    location = json.decode(config.get("location") or DEFAULT_LOCATION)
+    location = json.decode(_timezone_location(config, config.get("location")) or DEFAULT_LOCATION)
     timezone = location["timezone"]
     font_color = config.get("color") or DEFAULT_FONT_COLOR[bg_id]
 
@@ -235,11 +235,14 @@ def get_schema():
                     "#00F",
                 ],
             ),
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Location for which to display time",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
         ],
     )
@@ -728,3 +731,14 @@ DEFAULT_LOCATION = """
   "timezone": "America/New_York"
 }
 """
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

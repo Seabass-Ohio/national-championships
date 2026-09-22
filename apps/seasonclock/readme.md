@@ -42,3 +42,9 @@ test-only hook and is intentionally not part of the published schema:
 ```sh
 pixlet render seasonclock.star dev_date=2026-12-25T12:00:00Z
 ```
+
+## Timezone settings (September 2026)
+
+Timezone is now a searchable IANA timezone setting. Leave it blank to follow the display timezone. Existing installations retain their previous effective timezone through the reviewed Cloud migration. A separate hemisphere setting preserves seasons or moon orientation without precise coordinates.
+
+Downstream change, original authorship retained. Requires the Niblet runtime with timezone Text metadata. All changed schemas were evaluated with networking denied. Migration and rendering evidence is recorded in the timezone release audit; schema checks alone do not certify live provider behavior.

@@ -336,6 +336,8 @@ def get_schema():
                 ],
             ),
             schema.Text(
+                format = "timezone",
+                time_context = True,
                 id = "timezone",
                 name = "Timezone",
                 desc = "Optional IANA timezone override, e.g. America/New_York. Leave empty to use the device timezone.",
@@ -382,3 +384,5 @@ def get_schema():
             ),
         ],
     )
+
+# Downstream modification: standardized timezone selection and effective render context.

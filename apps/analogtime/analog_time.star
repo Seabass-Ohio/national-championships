@@ -27,7 +27,7 @@ DEFAULT_LOCATION = """
 """
 
 def main(config):
-    timezone = json.decode(config.get("location", DEFAULT_LOCATION))["timezone"]
+    timezone = json.decode(_timezone_location(config, config.get("location", DEFAULT_LOCATION)))["timezone"]
 
     now = time.now().in_location(timezone)
     now_txt = now.format("3:04")
@@ -93,11 +93,14 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Location for which to display time.",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Toggle(
                 id = "display_date",
@@ -162,3 +165,14 @@ def pad_text(text):
         for i, x in enumerate(text):
             text[i] = x + " " * (max_len - len(x))
     return text
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)

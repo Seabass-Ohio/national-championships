@@ -141,7 +141,7 @@ def main(config):
     scale = 2 if canvas.is2x() else 1
 
     # Get latitude from location
-    location = json.decode(config.get("location", DEFAULT_LOCATION))
+    location = json.decode(_timezone_location(config, config.get("location", DEFAULT_LOCATION)))
     lat = float(location["lat"])
     tz = location.get("timezone")
 
@@ -386,12 +386,16 @@ def get_schema():
     return schema.Schema(
         version = "1",
         fields = [
-            schema.Location(
-                id = "location",
-                name = "Location",
-                desc = "Location for which to display the moon phase.",
-                icon = "locationDot",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
+            schema.Dropdown(id = "hemisphere", name = "Hemisphere", desc = "Used for seasons and moon orientation.", icon = "earth", default = "northern", options = [schema.Option(display = "Northern", value = "northern"), schema.Option(display = "Southern", value = "southern")]),
             schema.Dropdown(
                 id = "display_text",
                 name = "Display Text",
@@ -451,3 +455,15 @@ def get_schema():
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    location["lat"] = "-1" if config.get("hemisphere", "northern") == "southern" else "1"
+    return json.encode(location)

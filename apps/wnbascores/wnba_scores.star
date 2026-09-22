@@ -690,6 +690,8 @@ def get_schema():
         version = "1",
         fields = [
             schema.Text(
+                format = "timezone",
+                time_context = True,
                 id = "timezone",
                 name = "Timezone",
                 desc = "Leave blank to use the device timezone. To override, enter a timezone such as America/New_York or Europe/London.",
@@ -910,3 +912,5 @@ def ordered_scores(scores):
 
 def score_order(score):
     return (score.get("date", ""), score["id"])
+
+# Downstream modification: declare the effective timezone contract for shared rendering.

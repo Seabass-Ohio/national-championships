@@ -83,7 +83,7 @@ def parse_state_value(state):
 
 def main(config):
     timezone = None
-    location = config.get("location")
+    location = _timezone_location(config, config.get("location"))
     if location:
         loc = json.decode(location)
         timezone = loc["timezone"]
@@ -472,11 +472,14 @@ def get_schema():
                     ),
                 ],
             ),
-            schema.Location(
-                id = "location",
-                name = "Location",
-                icon = "locationDot",
-                desc = "Location for which to display time",
+            schema.Text(
+                id = "timezone",
+                name = "Timezone",
+                desc = "Leave blank to use the display timezone.",
+                icon = "clock",
+                default = "",
+                format = "timezone",
+                time_context = True,
             ),
             schema.Dropdown(
                 id = "icon",
@@ -522,3 +525,14 @@ def get_schema():
             ),
         ],
     )
+
+# Downstream modification: standardized timezone input, with legacy-config compatibility.
+def _timezone_location(config, legacy):
+    zone = config.get("timezone")
+    if zone == None or (type(zone) == "string" and zone.startswith("{")):
+        return legacy
+    zone = zone.strip() or config.get("$tz", time.tz()) or "UTC"
+    if not time.is_valid_timezone(zone):
+        fail("Choose a valid IANA timezone")
+    location = {"timezone": zone}
+    return json.encode(location)
