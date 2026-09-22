@@ -1,6 +1,7 @@
 """Offline complete-sequence regression/benchmark: python3 tests/sports_playback.py ../niblet-cli/niblet."""
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -53,6 +54,9 @@ with tempfile.TemporaryDirectory() as directory:
         )),
     ):
         source = next((root / 'apps' / app).glob('*.star')).read_text()
+        assets = root / 'apps' / app / 'images'
+        if assets.exists():
+            shutil.copytree(assets, tmp / 'images', dirs_exist_ok=True)
         source = source.replace('def get_cachable_data(', 'def original_get_cachable_data(')
         source = source.replace('def get_logoType(', 'def original_get_logoType(')
         if app in ("soccermens", "soccerwomens"):

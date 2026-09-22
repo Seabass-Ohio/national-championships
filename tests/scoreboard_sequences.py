@@ -1,6 +1,7 @@
 """Offline ordering, deduplication and calendar-window checks for every score app."""
 from pathlib import Path
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -22,6 +23,9 @@ with tempfile.TemporaryDirectory() as directory:
     tmp = Path(directory)
     for name in names:
         source = next((root/'apps'/name).glob('*.star')).read_text()
+        assets = root / 'apps' / name / 'images'
+        if assets.exists():
+            shutil.copytree(assets, tmp / 'images', dirs_exist_ok=True)
         assert 'page_size =' not in source and '60 // len(scores)' not in source, name
         source = source.replace('def get_schema(', 'def original_get_schema(', 1)
         source = source.replace('def main(', 'def app_main(', 1).replace('def get_cachable_data(', 'def original_get_cachable_data(',1)

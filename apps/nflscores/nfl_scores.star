@@ -11,6 +11,8 @@ Author: LunchBox8484
 
 load("encoding/json.star", "json")
 load("http.star", "http")
+load("images/colts.png", COLTS_LOGO = "file")
+load("images/lar.png", RAMS_LOGO = "file")
 load("render.star", "render")
 load("schema.star", "schema")
 load("time.star", "time")
@@ -52,9 +54,7 @@ ALT_COLOR = """
 ALT_LOGO = """
 {
     "AFC": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/afc.png",
-    "NFC": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nfc.png",
-    "IND": "https://i.ibb.co/jzMc7SB/colts.png",
-    "LAR": "https://i.ibb.co/7JjCcrtk/lar.png"
+    "NFC": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nfc.png"
 }
 """
 MAGNIFY_LOGO = """
@@ -904,6 +904,11 @@ def get_background_color(team, displayType, color):
     return color
 
 def get_logoType(team, logo):
+    # Preserve the original custom artwork without a per-render image-host request.
+    if team == "IND":
+        return COLTS_LOGO.readall()
+    if team == "LAR":
+        return RAMS_LOGO.readall()
     usealtlogo = json.decode(ALT_LOGO)
     usealt = usealtlogo.get(team, "NO")
     originalLogo = logo

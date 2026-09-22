@@ -1,6 +1,7 @@
 """Offline timezone/schema regression: python3 tests/sports_timezones.py /path/to/niblet."""
 from pathlib import Path
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -24,6 +25,9 @@ with tempfile.TemporaryDirectory() as directory:
         fields = {f["id"]: f for f in schema["schema"]}
         assert "location" not in fields and fields["timezone"]["type"] == "text", app
         source = path.read_text().replace("def main(config):", "def scoreboard_main(config):", 1)
+        assets = path.parent / 'images'
+        if assets.exists():
+            shutil.copytree(assets, tmp / 'images', dirs_exist_ok=True)
         source += '\nTEST_CASES = json.decode(' + repr(json.dumps(cases)) + ')\n'
         source += '''
 def main(config):
